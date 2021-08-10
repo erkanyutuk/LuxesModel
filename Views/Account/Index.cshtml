@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MebelSayt.Models.UserOrder>
+    @{
+        ViewBag.Title = "Index";
+    }
+    <div class="container mt-4">
+        <h2>Sifariş Məlumatıarınız</h2>
+        <hr />
+        <table class="table table-striped table-hover table-responsive" >
+            <thead class="thead-dark">
+                <tr>
+                    <th>Sifariş Nömrəsi</th>
+                    <th>Sifariş Tarixi</th>
+                    <th>Sifarişin Qiyməti</th>
+                    <th>Statusu</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.OrderNumber</td>
+                        <td>@order.OrderDate.ToShortDateString()</td>
+                        <td>@order.Total Azn</td>
+                        <td>@order.OrderState</td>
+                        <td>
+                            @Html.ActionLink("Detaylar","Details",new {id=order.Id},new {@class="btn btn-warning btn-sm" })
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<MebelSayt.Models.CreditModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Bütün Kreditlərin Listəsi</h2>
+    <hr />
+
+    <table class="table  table-responsive mb-4 ">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefon)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Remaining)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RemainingMonth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreditDate)
+                </th>
+
+                <th style="width:18%">@Html.ActionLink("Yeni Kredit Əlavə Etmək ", "AddCredit", null, new { @class = "btn btn-primary btn-sm" })</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Payday == true)
+                {
+                    <tr class="btn-danger">
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefon)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remaining) Azn
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemainingMonth) Ay
+                        </td>
+                        <td>
+                            @item.CreditDate.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzəliş etmək", "Details", new { id = item.CreditId }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Silmək", "Delete", new { id = item.CreditId }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefon)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remaining) azn
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemainingMonth) Ay
+                        </td>
+                        <td>
+                            @item.CreditDate.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzəliş etmək", "Details", new { id = item.CreditId }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Silmək", "Delete", new { id = item.CreditId }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+
+    </table>
+</div>
+

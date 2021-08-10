@@ -1,0 +1,16 @@
+﻿@model MebelSayt.Models.Card
+<style>
+    #count a{
+    color:white!important;
+    text-decoration:none;
+    font-size:18px;
+    }
+</style>
+<ul class="navbar-nav my-2 my-lg-0">
+    <li class="nav-item active mr-1" id="count">
+        <a href="/Cart">
+            <i class="fa fa-shopping-cart" style="font-size:30px; color:white!important"></i>
+            (@Model.CardLines.Count)
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,152 @@
+﻿@using MebelSayt.Models
+@using MebelSayt.Entity
+@model CreditDetails
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var i = 0;
+}
+
+<style>
+    .br {
+        border-left: 3px outset;
+        border-color: darkgreen;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Kreditin Detayli Məlumatları</h2>
+            <hr />
+            @if (TempData["success"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    @TempData["success"]
+                </div>
+            }
+            <dl class="row">
+                <dt class="col-sm-3">Ad Soyad</dt>
+                <dd class="col-sm-9">@Model.FullName  </dd>
+
+                <dt class="col-sm-3">Sifarişin Adı</dt>
+                <dd class="col-sm-9">@Model.ProductName</dd>
+
+                <dt class="col-sm-3">Kreditin Miqdarı</dt>
+                <dd class="col-sm-9">@Model.Total Azn</dd>
+
+                <dt class="col-sm-3">İlkin Ödəniş </dt>
+                <dd class="col-sm-9">@Model.Initial Azn</dd>
+
+                <dt class="col-sm-3">Kredit Müddəti </dt>
+                <dd class="col-sm-9">@Model.Month Ay</dd>
+
+                <dt class="col-sm-3 ">Ödəniləcək Miqdar</dt>
+                <dd class="col-sm-9">@Model.Remaining Azn</dd>
+
+                <dt class="col-sm-3">Ödənmiş Miqdar</dt>
+                <dd class="col-sm-9">@Model.Payed Azn</dd>
+                <dt class="col-sm-3">Telefon</dt>
+                <dd class="col-sm-9">@Model.Telefon</dd>
+
+                <dt class="col-sm-3">Ünvan</dt>
+                <dd class="col-sm-9 br">
+
+                    @Model.Sehir <br />
+                    @Model.Adress1
+
+
+                </dd>
+                <dt class="col-sm-3">Ekstra Məlumat</dt>
+                <dd class="col-sm-9">@Model.Ekstra</dd>
+
+                <dd class="col-sm-12">
+                    <table class="table table-hover table-striped table-responsive">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Tarix</th>
+                                <th>Borc</th>
+                                <th>Status</th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Lines)
+                            {
+
+
+
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@item.PaymentDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.MonthlyPayment</td>
+                                    @using (Html.BeginForm("Edit", "Credit"))
+                                    {
+                                        <td>
+
+                                            <input type="hidden" name="CreditId" value=@Model.CreditId />
+                                            <input type="hidden" name="MonthlyId" value=@item.MonthlyId />
+                                            @if (item.CreditState == EnumCreditState.Payed)
+                                            {
+                                            <select id="creditstate" class="form-control btn-success" disabled="true" name="state">
+                                                <option value=0 class="btn-success" selected>Ödənib</option>
+                                                <option value=1 class="btn-danger">Ödənməli</option>
+                                            </select>
+                                            }
+                                            else
+                                            {
+                                            <select id="creditstate" class="form-control btn-danger" disabled="true" name="state">
+                                                <option value=0 class="btn-success">Ödənib</option>
+                                                <option value=1 class="btn-danger" selected>Ödənməli</option>
+                                            </select>
+                                            }
+
+
+                                        </td>
+                                        <td>
+                                            @if (DateTime.Compare(item.PaymentDate,DateTime.Now)<0 && item.CreditState == EnumCreditState.Payed)
+                                            {
+                                                <a class="btn btn-warning edit-button hidden" onclick="myFunction(@i)" id="edit"><i class="fa fa-pencil-square-o"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-warning edit-button" onclick="myFunction(@i)" id="edit"><i class="fa fa-pencil-square-o"></i></a>
+                                            }
+
+                                            <button type="submit" class="btn btn-sm btn-success save hidden">Kaydet</button>
+                                        </td>
+                                     }
+
+                                </tr>
+                                <tr class="hidden">@(i++)</tr>
+
+
+                            }
+
+                        </tbody>
+
+                    </table>
+                </dd>
+
+
+            </dl>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var element = document.getElementsByTagName("select");
+    var button = document.getElementsByClassName("save");
+    var edit = document.getElementsByClassName("edit-button");
+    function myFunction(id) {
+        element[id].toggleAttribute("disabled");
+        button[id].classList.toggle("hidden");
+        edit[id].classList.toggle("hidden");
+    }
+</script>

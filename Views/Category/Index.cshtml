@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MebelSayt.Entity.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-4">
+    <h2>Kateqoriya Listi</h2>
+    <table class="table table-bordered table-striped mt-4">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th style="width:18%"> @Html.ActionLink("Yeni Kateqoriya Əlavə Et ", "Create", null, new { @class = "btn btn-primary btn-sm" })</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Düzəliş etmək", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                    @Html.ActionLink("Silmək", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

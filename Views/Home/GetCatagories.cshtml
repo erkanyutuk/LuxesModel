@@ -1,0 +1,38 @@
+﻿@using MebelSayt.Entity;
+@model IEnumerable<Category>
+@{
+    var selectedCategory = Url.RequestContext.RouteData.Values["id"];
+}
+
+    <div class="list-group">
+        <a href="/Home/List" class="list-group-item list-group-item-action"><i class="fa fa-angle-double-right"></i> Bütün Kateqoriyalar</a>
+        @foreach (var category in Model)
+        {
+            if (selectedCategory != null)
+            {
+
+                if (int.Parse(selectedCategory.ToString()) == category.Id)
+                {
+                    <a href="/Home/List/@category.Id" class="list-group-item list-group-item-action active">
+                        <i class="fa fa-angle-double-right"></i>
+                        @category.Name
+                    </a>
+                }
+                else
+                {
+                    <a href="/Home/List/@category.Id" class="list-group-item list-group-item-action">
+                        <i class="fa fa-angle-double-right"></i>
+                        @category.Name
+                    </a>
+                }
+            }
+            else
+            {
+                <a href="/Home/List/@category.Id" class="list-group-item list-group-item-action">
+                    <i class="fa fa-angle-double-right"></i>
+                    @category.Name
+                </a>
+            }
+
+        }
+    </div>

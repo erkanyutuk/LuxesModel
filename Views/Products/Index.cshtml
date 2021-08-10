@@ -1,0 +1,79 @@
+﻿@model IEnumerable<MebelSayt.Entity.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-4">
+    <h2>Bütün Mebellərin Listəsi</h2>
+    <hr />
+
+    <table class="table table-bordered table-striped mb-4">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsHome)
+            </th>
+            <th style="width:18%">@Html.ActionLink("Yeni Mebel Əlavə Etmək ", "Create", null, new { @class = "btn btn-primary btn-sm" })</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.Image" style="max-width:150px;max-height:200px;" alt="Alternate Text" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) azn
+                </td>
+
+                <td>
+                    @if (item.IsApproved)
+                    {
+                        <div class="badge badge-success" style="font-size:13px;"><i class="fa fa-check-square"></i> Onaylı</div>
+                    }
+                    else
+                    {
+                        <div class="badge badge-danger" style="font-size:13px;"><i class="fa fa-exclamation-circle"></i> Onaysız</div>
+                    }
+                </td>
+                <td>
+                    @if (item.IsHome)
+                    {
+                        <div class="badge badge-success" style="font-size:13px;"><i class="fa fa-check-square"></i> Əsas Səyfədə</div>
+                    }
+                    else
+                    {
+                        <div class="badge badge-danger"style="font-size:13px;"><i class="fa fa-exclamation-circle"></i> Əsas Səyfədə Deyil</div>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Düzəliş etmək", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                    @Html.ActionLink("Silmək", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
